@@ -69,6 +69,13 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
     private static int MEDIA_DURATION = 2;
     private static int MEDIA_POSITION = 3;
     private static int MEDIA_ERROR = 9;
+	private static int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+    private static int OUTPUT_FORMAT = MediaRecorder.OutputFormat.MPEG_4;
+    private static int CHANNELS = 1; // Mono
+    private static int SAMPLING_RATE = 44100; // Good enough for speech
+    private static int BITRATE = 32768;
+    private static String EXTENSION_FILE = "m4a";
+    private static int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AAC;
 
     // Media error codes
     private static int MEDIA_ERR_NONE_ACTIVE    = 0;
@@ -152,11 +159,11 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
         case NONE:
             this.audioFile = file;
             this.recorder = new MediaRecorder();
-            this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            this.recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS); // RAW_AMR);
-            this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC); //AMR_NB);
-            this.tempFile = generateTempFile();
-            this.recorder.setOutputFile(this.tempFile);
+            this.recorder.setAudioSource(AUDIO_SOURCE);
+			this.recorder.setOutputFormat(OUTPUT_FORMAT);
+			this.recorder.setAudioChannels(CHANNELS);
+			this.recorder.setAudioSamplingRate(SAMPLING_RATE);
+			this.recorder.setAudioEncodingBitRate(BITRATE);
             try {
                 this.recorder.prepare();
                 this.recorder.start();
