@@ -73,7 +73,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
     private static int OUTPUT_FORMAT = MediaRecorder.OutputFormat.MPEG_4;
     private static int CHANNELS = 1; // Mono
     private static int SAMPLING_RATE = 44100; // Good enough for speech
-    private static int BITRATE = 32768;
+    private static int BITRATE = 128000;
     private static String EXTENSION_FILE = ".m4a";
     private static int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AAC;
 
