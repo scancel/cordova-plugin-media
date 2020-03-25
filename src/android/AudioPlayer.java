@@ -74,7 +74,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
     private static int CHANNELS = 1; // Mono
     private static int SAMPLING_RATE = 44100; // Good enough for speech
     private static int BITRATE = 32768;
-    private static String EXTENSION_FILE = "m4a";
+    private static String EXTENSION_FILE = ".m4a";
     private static int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AAC;
 
     // Media error codes
@@ -116,9 +116,9 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
     private String generateTempFile() {
       String tempFileName = null;
       if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-          tempFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmprecording-" + System.currentTimeMillis() + ".3gp";
+          tempFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmprecording-" + System.currentTimeMillis() + EXTENSION_FILE;
       } else {
-          tempFileName = "/data/data/" + handler.cordova.getActivity().getPackageName() + "/cache/tmprecording-" + System.currentTimeMillis() + ".3gp";
+          tempFileName = "/data/data/" + handler.cordova.getActivity().getPackageName() + "/cache/tmprecording-" + System.currentTimeMillis() + EXTENSION_FILE;
       }
       return tempFileName;
     }
@@ -163,7 +163,10 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
 			this.recorder.setOutputFormat(OUTPUT_FORMAT);
 			this.recorder.setAudioChannels(CHANNELS);
 			this.recorder.setAudioSamplingRate(SAMPLING_RATE);
-			this.recorder.setAudioEncodingBitRate(BITRATE);
+            this.recorder.setAudioEncoder(AUDIO_ENCODER);
+            this.recorder.setAudioEncodingBitRate(BITRATE);
+            this.tempFile = generateTempFile();
+            this.recorder.setOutputFile(this.tempFile);
             try {
                 this.recorder.prepare();
                 this.recorder.start();
